@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Support Ticket Analyzer</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>&#x1F3AF; AI Support Ticket Analyzer</h1>
+    <p>Natural-language analytics powered by LLM intent parsing &amp; deterministic query execution</p>
+  </div>
+  <div id="llm-badge">&#x25CF; Checking LLM...</div>
+</header>
+
+<main>
+
+  <!-- KPI GRID -->
+  <div id="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-label">Total Tickets</div>
+      <div class="kpi-value" id="kpi-total">-</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Open</div>
+      <div class="kpi-value orange" id="kpi-open">-</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Resolved</div>
+      <div class="kpi-value green" id="kpi-resolved">-</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Escalated</div>
+      <div class="kpi-value red" id="kpi-escalated">-</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Critical</div>
+      <div class="kpi-value red" id="kpi-critical">-</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Avg Response</div>
+      <div class="kpi-value" id="kpi-resp" style="font-size:1.3rem">-</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Avg Resolution</div>
+      <div class="kpi-value" id="kpi-resol" style="font-size:1.3rem">-</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Avg Rating</div>
+      <div class="kpi-value yellow" id="kpi-rating" style="font-size:1.3rem">-</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Anomalies</div>
+      <div class="kpi-value red" id="kpi-anomalies">-</div>
+    </div>
+  </div>
+
+  <!-- QUERY SECTION -->
+  <div class="card" id="query-section">
+    <h2>&#x1F916; Ask AI</h2>
+    <div class="query-box">
+      <input
+        type="text"
+        id="question-input"
+        placeholder="Ask anything about the support tickets..."
+        autocomplete="off"
+      />
+      <button class="btn" id="ask-btn" onclick="submitQuery()">Ask AI</button>
+    </div>
+
+    <div class="example-qs">
+      <button onclick="setQuestion(this)">How many tickets are currently open?</button>
+      <button onclick="setQuestion(this)">Which agent resolved the most tickets?</button>
+      <button onclick="setQuestion(this)">What is the average customer rating for Technical tickets?</button>
+      <button onclick="setQuestion(this)">How many critical tickets are unresolved?</button>
+      <button onclick="setQuestion(this)">Show me all Critical tickets not resolved within 12 hours.</button>
+      <button onclick="setQuestion(this)">Which agent has the lowest average customer rating?</button>
+      <button onclick="setQuestion(this)">How many tickets are there by category?</button>
+      <button onclick="setQuestion(this)">What is the average response time for High priority tickets?</button>
+      <button onclick="setQuestion(this)">Which category has the most tickets?</button>
+      <button onclick="setQuestion(this)">Show unresolved high-priority tickets older than 24 hours.</button>
+      <button onclick="setQuestion(this)">Are there any anomalies in resolution times?</button>
+      <button onclick="setQuestion(this)">How many Billing tickets are unresolved?</button>
+    </div>
+
+    <div id="query-status"></div>
+  </div>
+
+  <!-- ANSWER SECTION -->
+  <div class="card" id="answer-section">
+    <h2>&#x2713; Answer</h2>
+    <div class="answer-box">
+      <div class="answer-text" id="answer-text"></div>
+      <div class="answer-meta">
+        <span class="tag intent" id="intent-tag"></span>
+        <span class="tag" id="count-tag"></span>
+      </div>
+    </div>
+    <div id="results-container"></div>
+  </div>
+
+  <!-- ANOMALIES SECTION -->
+  <div class="card" id="anomaly-section">
+    <h2>&#x26A0;&#xFE0F; Detected Anomalies</h2>
+    <div id="anomaly-meta" class="anomaly-meta"></div>
+    <div id="anomaly-container"></div>
+  </div>
+
+</main>
+
+<script src="/static/app.js"></script>
+</body>
+</html>
